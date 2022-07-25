@@ -4,13 +4,13 @@ import { postImage } from '../controllers/Images.js';
 const router = express.Router();
 import fs from 'fs'
 import request from 'request'
-const upload = multer({ dest:'../uploads'  });
+// const upload = multer({ dest:'../uploads'  });
 
 const uploadFile = async (req, res, next) => {
     const data = req.body;
     try {
-        upload.single('file', data)
-        res.send('success')
+        // upload.single('file', data)
+        // res.send('success')
         // var download = function(uri, filename, callback){
         // request.head(uri, function(err, res, body){
 

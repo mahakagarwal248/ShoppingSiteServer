@@ -1,0 +1,7 @@
+File from: [D:/ShoppingSite/server/*.{jpg,JPEG,png,gif}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: 

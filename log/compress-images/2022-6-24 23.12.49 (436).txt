@@ -1,0 +1,9 @@
+File from: [D:/ShoppingSite/server/google.png]
+
+File to: [img/google.png]
+
+Compression algorithm: [pngquant]
+
+Description: Error: Command failed: D:\ShoppingSite\server\node_modules\pngquant-bin\vendor\pngquant.exe --quality=20-50 -o img/google.png D:/ShoppingSite/server/google.png
+  error: Not a PNG file (libpng failed)
+  error: cannot decode image ShoppingSite\server\google.png

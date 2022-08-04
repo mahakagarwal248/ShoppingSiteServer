@@ -5,7 +5,7 @@ import buffer from 'buffer'
 import users from '../models/user.js'
 
 export const signup = async (req,res) => {
-    const {name, email, password, mobile, address, securityAns} = req.body;
+    const {name, email, password, mobile, address, securityQues, securityAns} = req.body;
     try {
         const existingUser = await users.findOne({email});
         if(existingUser){
@@ -14,7 +14,8 @@ export const signup = async (req,res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const newUser = await users.create({name, email, password: hashedPassword, mobile, address, securityAns});
+        const hashedAns = await bcrypt.hash(securityAns, 12);
+        const newUser = await users.create({name, email, password: hashedPassword, mobile, address, securityQues, securityAns: hashedAns});
         const token = jwt.sign({email: newUser.email, id:newUser._id}, process.env.JWT_SECRET, {expiresIn:'1h'})
         res.status(200).json({result: newUser, token})
 
@@ -47,17 +48,31 @@ export const login = async (req, res) => {
         res.status(500).json("Something went wrong...");
     }
 }
-
-export const forgotPassword = async (req, res) => {
-    const {fgEmail,securityAns} = req.body
-
+export const fetchSecurityQues = async (req, res) => {
+    const {email:email} = req.params;
     try {
-        const existingUser = await users.findOne({fgEmail});
+        const existingUser = await users.findOne({email});
+        if(!existingUser){
+            return res.status(404).json({message: "User doesn't exist"});
+        }
+        const user = await users.findOne({email:email});
+        const ques = user.securityQues;
+        res.status(200).json(ques);
+    } catch (error) {
+        
+    }
+}
+export const forgotPassword = async (req, res) => {
+    const {email,ans} = req.body
+    
+    try {
+        const existingUser = await users.findOne({email});
         if(!existingUser){
             return res.status(404).json({message: "User doesn't exist"});
         }
 
-        if(securityAns !== existingUser.securityAns){
+        const isAnsCrt = await bcrypt.compare(ans, existingUser.securityAns);
+        if(!isAnsCrt){
             return res.status(400).json({message: "Answer doesn't match"});
         }
         res.status(200).json("answer matched")
@@ -66,16 +81,16 @@ export const forgotPassword = async (req, res) => {
     }
 }
 export const changePassword = async (req, res) => {
-    const {fgEmail,newPW} = req.body;
+    const {email,newPW} = req.body;
     
     try {
-        const existingUser = await users.find({fgEmail});
+        const existingUser = await users.find({email});
         if(!existingUser){
             return res.status(404).json({message: "User doesn't exist"});
         }
         const hashedPassword = await bcrypt.hash(newPW, 12);
         
-        const user = await users.findOne({email:fgEmail})
+        const user = await users.findOne({email:email})
         const _id = user._id
         
         await users.findByIdAndUpdate(_id, {$set :{ password:hashedPassword}})

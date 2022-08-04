@@ -10,7 +10,11 @@ export const addToWishlist = async (req, res) => {
 
     const {productData} = req.body;
     const {name, description, brand, price, userId} = productData
-    const addProductToWishlist = new wishlist({name, description, brand, price, userId, productId: _id});
+    var img = {
+        data: req.body.productData.img.data,
+        contentType: req.body.productData.img.contentType,
+      }
+    const addProductToWishlist = new wishlist({name, description, brand, price, userId, productId: _id,img});
 
     try {
         await addProductToWishlist.save();

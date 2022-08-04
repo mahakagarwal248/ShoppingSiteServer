@@ -2,11 +2,17 @@ import products from '../models/products.js';
 
 export const addProducts = async (req, res) => {
     const productData = req.body;
-    const newProduct = new products(productData);
+    const {name, description, category, price, quantity, brand} = productData
+    var img = {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+        }
+    const newProduct = new products({name, description, category, price, quantity, brand, img});
     try {
         await newProduct.save();
         res.status(200).json("Added a new product successfully")
     } catch (error) {
+        console.log(error)
         res.status(400).json("Couldn't added a new product")
     }
 }

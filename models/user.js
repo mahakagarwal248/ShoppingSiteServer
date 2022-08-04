@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     password:{type: String, required: true},
     mobile:{type: Number, required: true},
     address:{type: String, required: true},
+    securityQues:{type: String, required: true},
     securityAns:{type:String, required: true}
 })
 

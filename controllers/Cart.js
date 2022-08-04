@@ -9,8 +9,12 @@ export const addToCart = async (req, res) => {
     }
 
     const {productData} = req.body;
-    const {name, description, brand, price, quantity, userId} = productData
-    const addProductToCart = new cart({name, description, brand, price, quantity, userId, productId: _id});
+    const {name, description, brand, price, quantity, userId} = productData;
+    var img = {
+        data: req.body.productData.img.data,
+        contentType: req.body.productData.img.contentType,
+      }
+    const addProductToCart = new cart({name, description, brand, price, quantity, userId, productId: _id, img});
 
     try {
         await addProductToCart.save();

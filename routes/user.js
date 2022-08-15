@@ -1,13 +1,15 @@
 import express from 'express';
 
-const router = express.Router();
-
+import validate from '../helpers/Validation.js';
+import paramValidation from '../config/param-validations.js';
 import {signup, login, forgotPassword, changePassword, fetchSecurityQues} from '../controllers/Users.js';
 
-router.post('/signup', signup);
-router.post('/login', login);
-router.get('/getSecurityQues/:email', fetchSecurityQues);
-router.post('/forgotPassword', forgotPassword);
-router.patch('/changePassword', changePassword);
+const router = express.Router();
 
-export default router
+router.post('/signup',validate(paramValidation.createUser), signup);
+router.post('/login',validate(paramValidation.loginUser), login);
+router.get('/getSecurityQues/:email',validate(paramValidation.getSecurityQuestion), fetchSecurityQues);
+router.post('/forgotPassword',validate(paramValidation.forgotPassword), forgotPassword);
+router.patch('/changePassword',validate(paramValidation.changePassword), changePassword);
+
+export default router;

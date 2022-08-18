@@ -9,6 +9,11 @@ const userSchema = mongoose.Schema(
     address: { type: String, required: true },
     securityQues: { type: String, required: true },
     securityAns: { type: String, required: true },
+    profilePicture: {
+      data: Buffer,
+      contentType: String,
+      default: {}
+    },
   },
   { timestamps: true }
 );

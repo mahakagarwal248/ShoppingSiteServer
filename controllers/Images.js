@@ -1,4 +1,5 @@
-import images from "../models/images.js";
+// import images from "../models/images.js";
+import user from "../models/user.js";
 
 import sharp from "sharp";
 import path from "path";
@@ -15,7 +16,7 @@ export const postImage = async (req, res) => {
   fs.unlinkSync(req.file.path);
 
   var obj = {
-    img: {
+    profilePicture: {
       data: fs.readFileSync(
         path.join(req.file.destination + "/resized/" + req.file.filename)
       ),
@@ -23,7 +24,7 @@ export const postImage = async (req, res) => {
     },
     userId: _id,
   };
-  images.create(obj, (err, item) => {
+  user.findByIdAndUpdate(_id, obj, (err, item) => {
     if (err) {
       console.log(err);
     } else {
@@ -36,7 +37,8 @@ export const postImage = async (req, res) => {
 export const getImage = async (req, res) => {
   const { id: _id } = req.params;
   try {
-    const pic = await images.findOne({ userId: _id });
+    const users = await user.findById(_id)
+    const pic = await users.profilePicture;
     res.status(200).json(pic);
   } catch (error) {
     res.status(404).json({ message: error.message });

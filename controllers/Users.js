@@ -66,6 +66,16 @@ export const login = async (req, res) => {
     res.status(500).json("Something went wrong...");
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const usersList = await users.find();
+    res.status(200).json(usersList);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const fetchSecurityQues = async (req, res) => {
   const { email: email } = req.params;
   try {

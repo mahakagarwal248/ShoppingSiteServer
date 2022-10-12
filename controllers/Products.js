@@ -36,7 +36,6 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductsByCategory = async (req, res) => {
   const { id: category } = req.params;
-
   try {
     if (category === "all") {
       const productsList = await products.find();

@@ -5,16 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "mahak",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^8.5.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "browser-image-compression": "^2.0.0",
     "buffer": "^6.0.3",
     "compress-images": "^2.0.5",
+    "config": "^3.3.8",
     "cors": "^2.8.5",
     "cross-blob": "^3.0.1",
     "dotenv": "^16.0.1",

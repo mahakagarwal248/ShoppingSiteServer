@@ -48,6 +48,20 @@ export default {
       },
     },
   }),
+  updateProduct: joi.object({
+    body: {
+      merchantId: joi.string().required(),
+      productId: joi.string().required(),
+      description: joi.string().required(),
+      quantity: joi.number().required(),
+    },
+  }),
+  deleteProduct: joi.object({
+    query: {
+      merchantId: joi.string().required(),
+      productId: joi.string().required(),
+    },
+  }),
   getProductsByCategory: joi.object({
     params: {
       id: joi.string().required(),

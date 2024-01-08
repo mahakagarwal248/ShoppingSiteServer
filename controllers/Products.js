@@ -43,7 +43,7 @@ export const getProductsOfMerchant = async (req, res) => {
   }
 };
 
-export const deleteProfile = async (req, res) => {
+export const deleteProduct = async (req, res) => {
   const { merchantId, productId } = req.query;
   try {
     const existingProduct = await products.findOneAndUpdate(
@@ -53,12 +53,11 @@ export const deleteProfile = async (req, res) => {
       },
       { isActive: false }
     );
-    if (!existingProduct)
-      return res.status(404).json({ message: "Product not found" });
+    if (!existingProduct) return res.status(404).json("Product not found");
 
-    return res.status(200).json({ msg: "Product deleted sucessfully" });
+    return res.status(200).json("Product deleted sucessfully");
   } catch (error) {
-    return res.status(404).json({ message: error.message });
+    return res.status(404).json(error.message);
   }
 };
 
@@ -80,7 +79,7 @@ export const getProductById = async (req, res) => {
     });
     return res.status(200).json(productList);
   } catch (error) {
-    return res.status(404).json({ message: error.message });
+    return res.status(404).json(error.message);
   }
 };
 
@@ -88,16 +87,35 @@ export const getProductsByCategory = async (req, res) => {
   const { id: category } = req.params;
   try {
     if (category === "all") {
-      const productsList = await products.find({ isActive: true });
+      const productsList = await products.find({ isActive: true }).lean();
       return res.status(200).json(productsList);
     } else {
-      const productsList = await products.find({
-        category: category,
-        isActive: true,
-      });
+      const productsList = await products
+        .find({
+          category: category,
+          isActive: true,
+        })
+        .lean();
       return res.status(200).json(productsList);
     }
   } catch (error) {
-    console.log(error);
+    return res.status(404).json(error.message);
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  const { merchantId, productId, description, quantity } = req.body;
+  try {
+    const updatedProduct = await products
+      .findOneAndUpdate(
+        { merchantId, _id: productId },
+        { description, quantity },
+        { new: true }
+      )
+      .lean();
+    if (!updatedProduct) return res.status(404).json("Product not found");
+    return res.status(200).json(updatedProduct);
+  } catch (error) {
+    return res.status(404).json(error.message);
   }
 };

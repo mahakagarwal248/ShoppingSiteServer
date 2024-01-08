@@ -8,6 +8,8 @@ import {
   getProductsByCategory,
   getProductsOfMerchant,
   getProductById,
+  deleteProduct,
+  updateProduct,
 } from "../controllers/Products.js";
 
 const storage = multer.memoryStorage();
@@ -27,6 +29,12 @@ router.post(
 );
 router.route("/getMerchantProducts").get(getProductsOfMerchant);
 router.route("/getAllProducts").get(getAllProducts);
+router
+  .route("/update")
+  .put(Validation(paramValidations.updateProduct), updateProduct);
+router
+  .route("/delete")
+  .delete(Validation(paramValidations.deleteProduct), deleteProduct);
 router
   .route("/getProductById")
   .get(Validation(paramValidations.getProductById), getProductById);

@@ -46,68 +46,74 @@ export default {
         quantity: joi.number().required(),
         brand: joi.string(),
       },
-    }
+    },
   }),
   getProductsByCategory: joi.object({
-    params:{
-      id: joi.string().required()
-    }
-  }),
-  addToCart: joi.object({
     params: {
       id: joi.string().required(),
     },
-    body: {
-      productData: {
-        name: joi.string().required(),
-        description: joi.string().required(),
-        brand: joi.string(),
-        price: joi.number().required(),
-        quantity: joi.number().required(),
-        userId: joi.string().required(),
-      },
+  }),
+  getProductById: joi.object({
+    query: {
+      productId: joi.string().required(),
+    },
+  }),
+  addToCart: joi.object({
+    query: {
+      userId: joi.string().required(),
+      productId: joi.string().required(),
     },
   }),
   getCartProduct: joi.object({
-    params: {
-      id: joi.string().required(),
+    query: {
+      userId: joi.string().required(),
     },
   }),
   deleteCartProduct: joi.object({
-    params: {
-      id: joi.string().required(),
+    query: {
+      userId: joi.string().required(),
+      productId: joi.string().required(),
     },
   }),
   updateQuantity: joi.object({
-    params: {
-      id: joi.string().required(),
-    },
-    body: {
+    query: {
+      userId: joi.string().required(),
+      productId: joi.string().required(),
       quantity: joi.number().required(),
     },
   }),
   addToWishlist: joi.object({
-    params: {
-      id: joi.string().required(),
-    },
-    body: {
-      productData: {
-        name: joi.string().required(),
-        description: joi.string().required(),
-        brand: joi.string(),
-        price: joi.number().required(),
-        userId: joi.string().required(),
-      },
+    query: {
+      userId: joi.string().required(),
+      productId: joi.string().required(),
     },
   }),
   getWishlistProduct: joi.object({
-    params: {
-      id: joi.string().required(),
+    query: {
+      userId: joi.string().required(),
     },
   }),
   deleteWishlistProduct: joi.object({
-    params: {
-      id: joi.string().required(),
+    query: {
+      userId: joi.string().required(),
+      productId: joi.string().required(),
+    },
+  }),
+  initiatePayment: joi.object({
+    query: {
+      userId: joi.string().required(),
+    },
+  }),
+  paymentCallback: joi.object({
+    body: {
+      orderCreationId: joi.string().required(),
+      razorpayPaymentId: joi.string().required(),
+      razorpaySignature: joi.string().required(),
+    },
+  }),
+  getUserOrders: joi.object({
+    query: {
+      userId: joi.string().required(),
     },
   }),
 };

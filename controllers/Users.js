@@ -5,8 +5,16 @@ import buffer from "buffer";
 import users from "../models/user.js";
 
 export const signup = async (req, res) => {
-  const { name, email, password, mobile, address, securityQues, securityAns } =
-    req.body;
+  const {
+    name,
+    email,
+    password,
+    mobile,
+    address,
+    securityQues,
+    securityAns,
+    role,
+  } = req.body;
   try {
     const existingUser = await users.findOne({ email });
     if (existingUser) {
@@ -24,6 +32,7 @@ export const signup = async (req, res) => {
       address,
       securityQues,
       securityAns: hashedAns,
+      role,
     });
     const token = jwt.sign(
       { email: newUser.email, id: newUser._id },

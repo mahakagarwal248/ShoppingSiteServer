@@ -12,8 +12,14 @@ const userSchema = mongoose.Schema(
     profilePicture: {
       data: Buffer,
       contentType: String,
-      default: {}
+      default: {},
     },
+    role: { type: String, enum: ["customer", "merchant"] },
+    businessProfile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BusinessProfile",
+    },
+    isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

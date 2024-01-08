@@ -4,6 +4,7 @@ const productSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
+    initialQuanity: { type: Number, required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
     category: { type: String, required: true },
@@ -13,8 +14,16 @@ const productSchema = mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
+    images: [
+      {
+        data: Buffer,
+        contentType: String,
+      },
+    ],
     colors: [{ type: String }],
     tags: [{ type: String }],
+    isActive: { type: Boolean, default: true },
+    merchantId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

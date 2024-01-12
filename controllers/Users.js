@@ -1,8 +1,17 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import buffer from "buffer";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import users from "../models/user.js";
+import SendEmail from "../helpers/SendEmail.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const passwordChangedTemplate = path.join(
+  __dirname,
+  "../templates/passwordChanged.ejs"
+);
 
 export const signup = async (req, res) => {
   const {
@@ -113,23 +122,39 @@ export const forgotPassword = async (req, res) => {
     res.status(200).json("answer matched");
   } catch (error) {}
 };
-export const changePassword = async (req, res) => {
-  const { email, newPW } = req.body;
 
+export const changePassword = async (req, res) => {
+  const { oldPassword, email, newPassword } = req.body;
   try {
-    const existingUser = await users.find({ email });
+    const existingUser = await users.findOne({ email });
     if (!existingUser) {
       return res.status(404).json({ message: "User doesn't exist" });
     }
-    const hashedPassword = await bcrypt.hash(newPW, 12);
+    if (oldPassword) {
+      const isPasswordCrt = await bcrypt.compare(
+        oldPassword,
+        existingUser.password
+      );
+      if (!isPasswordCrt) {
+        return res.status(400).json("Please Enter Correct Existing password");
+      }
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
 
-    const user = await users.findOne({ email: email });
-    const _id = user._id;
-
-    await users.findByIdAndUpdate(_id, { $set: { password: hashedPassword } });
-    res.status(200).json({ message: "Password Changed Successfully" });
+    await users.findOneAndUpdate(
+      { _id: existingUser?._id },
+      { password: hashedPassword }
+    );
+    const mailData = {
+      heading: "Password Changed Successfully",
+      template: passwordChangedTemplate,
+      websiteUrl: __dirname,
+      name: existingUser?.name,
+      email: existingUser?.email,
+    };
+    SendEmail(mailData);
+    return res.status(200).json("Password Changed Successfully");
   } catch (error) {
-    console.log(error);
-    res.status(405).json({ message: error.message });
+    return res.status(405).json(error.message);
   }
 };

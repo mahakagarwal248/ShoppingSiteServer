@@ -32,8 +32,9 @@ export default {
   }),
   changePassword: joi.object({
     body: {
+      oldPassword: joi.string(),
       email: joi.string().email().required(),
-      newPW: joi.string().required(),
+      newPassword: joi.string().required(),
     },
   }),
   addProducts: joi.object({
@@ -128,6 +129,18 @@ export default {
   getUserOrders: joi.object({
     query: {
       userId: joi.string().required(),
+    },
+  }),
+  sendOtp: joi.object({
+    query: {
+      email: joi.string().required(),
+    },
+  }),
+  verifyOtp: joi.object({
+    body: {
+      otp: joi.string().required(),
+      mobile: joi.string().allow("").allow(null),
+      email: joi.string().required().allow("").allow(null),
     },
   }),
 };

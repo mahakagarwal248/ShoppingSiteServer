@@ -4,14 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-import userRoutes from "./routes/user.js";
-import productRoutes from "./routes/products.js";
-import cartRoutes from "./routes/cart.js";
-import wishlistRoutes from "./routes/wishlist.js";
-import imageRoutes from "./routes/images.js";
-import businessProfileRoutes from "./routes/businessProfile.js";
-import paymentRoutes from "./routes/payment.js";
-import orderRoutes from "./routes/orders.js";
+import routes from "./routes/index.js";
 
 const app = express();
 dotenv.config();
@@ -32,14 +25,7 @@ app.get("/", (req, res) => {
   res.send("This is a shopping site API");
 });
 
-app.use("/user", userRoutes);
-app.use("/products", productRoutes);
-app.use("/cart", cartRoutes);
-app.use("/wishlist", wishlistRoutes);
-app.use("/images", imageRoutes);
-app.use("/business-profile", businessProfileRoutes);
-app.use("/payment", paymentRoutes);
-app.use("/orders", orderRoutes);
+app.use("/", routes);
 
 const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.CONNECTION_URL;

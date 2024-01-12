@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping Site Mailer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <style type="text/css">
+      @font-face {
+        font-family: "Roboto Black";
+        src: url("<%= data.websiteUrl %>/node/assets/MailerImages/Roboto-Black.ttf");
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Roboto Regular";
+        src: url("<%= data.websiteUrl %>/node/assets/MailerImages/Roboto-Regular.ttf");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Roboto Medium";
+        src: url("<%= data.websiteUrl %>/node/assets/MailerImages/Roboto-Medium.ttf");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Roboto Bold";
+        src: url("<%= data.websiteUrl %>/node/assets/MailerImages/Roboto-Bold.ttf");
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      a:hover {
+        text-decoration: none !important;
+      }
+
+      .social-part {
+        display: flex;
+        padding: 15px 0px 20px;
+        justify-content: space-around !important;
+        align-items: center !important;
+      }
+
+      .sizer {
+        margin: 0px auto;
+      }
+
+      .contact-info {
+        display: flex;
+        align-items: center !important;
+      }
+
+      body,
+      table,
+      td,
+      a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      .social-link-text {
+        color: #da291c !important;
+        text-transform: uppercase;
+        font-size: 10px !important;
+        text-decoration: none !important;
+      }
+
+      .social-link-text p {
+        margin: 6px 13px !important;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+
+      table {
+        border-collapse: collapse !important;
+      }
+
+      .word-fit td {
+        word-break: initial !important;
+      }
+
+      body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+
+      div[style*="margin: 16px 0;"] {
+        margin: 0 !important;
+      }
+
+      @media screen and (max-width: 609px) {
+        .padd-0 {
+          padding: 0 !important;
+        }
+        .padd-30 {
+          padding: 15px 30px !important;
+        }
+        .main-thing {
+          height: 500px !important;
+        }
+        .row-padd {
+          padding: 15px 10px 0px !important;
+        }
+        .icon-space {
+          margin-left: 10px !important;
+        }
+        td.mobile-font.download-text {
+          font-size: 15px !important;
+        }
+        .spaced {
+          margin-top: -2px;
+        }
+        .call-text {
+          font-size: 11px !important;
+        }
+        td.text-padd.grey-section {
+          padding: 30px 10px 0px !important;
+        }
+        td.text-padd.second-grey-section {
+          padding: 0px 10px 40px !important;
+        }
+        td.mobile-font.inner-grey-section {
+          font-size: 10px !important;
+          padding: 0px;
+        }
+        td.mobile-font.inner-grey-section a {
+          font-size: 8px !important;
+        }
+        .app-download {
+          margin-top: -15px !important;
+        }
+        .logo {
+          max-width: 140px;
+        }
+
+        .mobile-font {
+          font-size: 13px !important;
+          line-height: 17px !important;
+        }
+
+        .mobile-font a {
+          font-size: 10px !important;
+        }
+
+        .text-padd {
+          padding: 10px 10px 10px 10px !important;
+        }
+
+        .table-padd {
+          padding: 0px 10px 0px 10px !important;
+        }
+
+        .full-maxwidth {
+          max-width: 100% !important;
+        }
+
+        .full-width {
+          display: block !important;
+          width: 100% !important;
+        }
+
+        .half-width {
+          max-width: 49% !important;
+        }
+
+        .mrg-btm10 {
+          margin-bottom: 10px !important;
+        }
+        .mail-icon,
+        .phone-icon {
+          margin-top: 0px !important;
+        }
+        .contact-info {
+          width: 375px !important;
+          max-width: 375px !important;
+        }
+        .contact-txt {
+          /* padding-top: 4px!important; */
+        }
+        .phone-icon-row {
+          padding-top: 3px !important;
+        }
+        .contact-txt.phone-txt-row {
+          /* padding-top: 5px!important; */
+        }
+        .mailer-bg-wrap {
+          height: 450px !important;
+        }
+        .padd-left-28 {
+          padding-left: 18px !important;
+        }
+        .padd-top-80 {
+          padding-top: 80px !important;
+        }
+        .padd-top-5 {
+          padding-top: 5px !important;
+        }
+        .padd-top-10 {
+          padding-top: 10px !important;
+        }
+        .padd-top-20 {
+          padding-top: 20px !important;
+        }
+        .padd-right-210 {
+          padding-right: 210px !important;
+        }
+        .padd-btm-50 {
+          padding-bottom: 50px !important;
+        }
+        .padd-btm-70 {
+          padding-bottom: 70px !important;
+        }
+        .padd-top-14 {
+          padding-top: 14px !important;
+        }
+        .padd-x-20 {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+        .cta-mobile {
+          padding: 5px 11px 5px 15px !important;
+          width: 160px !important;
+        }
+        .mail-icon {
+          width: 17px !important;
+        }
+      }
+
+      @media screen and (max-width: 416px) {
+        .app-download {
+          width: 70% !important;
+        }
+      }
+      @media screen and (max-width: 400px) {
+        .app-download {
+          width: 70% !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body style="margin: 0 !important; padding: 0 !important">
+    <!-- Subject Line Fix [Start] -->
+    <div
+      style="
+        font-family: arial, sans-serif;
+        font-size: 1px;
+        color: #f6f7fb;
+        line-height: 1px;
+        mso-line-height-rule: exactly;
+        display: none;
+        max-width: 0px;
+        max-height: 0px;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+      "
+    >
+      Shopping Site Emailer
+    </div>
+    <!-- Subject Line Fix [End] -->
+    <!-- Parent Table [Start] -->
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      align="center"
+    >
+      <tr>
+        <td align="center" valign="top">
+          <!--[if (gte mso 9)|(IE)]>
+                            <table border="0" cellpadding="0" cellspacing="0" width="610" align="center" bgcolor="#fff">
+                            <tbody>
+                            <tr>
+                            <td align="center" valign="top" width="610">
+                            <![endif]-->
+          <table
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            width="100%"
+            align="center"
+            style="background-color: #e6e6e6"
+            bgcolor="#fff"
+          >
+            <!-- View in Browser and Website [Start] -->
+
+            <!-- View in Browser and Website [End] -->
+
+            <!-- Hero Banner [Start] -->
+            <tr>
+              <td align="left" valign="middle" style="height: 200px">
+                <!--[if (gte mso 9)|(IE)]>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="600" align="center">
+                                        <tbody>
+                                        <tr>
+                                        <td align="center" valign="top" width="600">
+                                        <![endif]-->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <!-- <tbody style="display: flex; flex-direction: column; height: 100%;"> -->
+
+                  <tr style="height: 80px">
+                    <td
+                      align="left"
+                      valign="top"
+                      style="
+                        padding: 30px 20px 0px 20px;
+                        font-size: 20px;
+                        line-height: 22px;
+                        text-align: left;
+                        font-family: Roboto Medium;
+                        color: #000;
+                        display: block;
+                      "
+                      class="mobile-font"
+                    >
+                      Dear
+                      <span style="font-weight: bold"><%= data.name %> </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td
+                      align="left"
+                      valign="top"
+                      style="
+                        padding: 20px 20px 30px 20px;
+                        font-size: 18px;
+                        line-height: 22px;
+                        text-align: left;
+                        font-family: Roboto Medium;
+                        color: #000;
+                        display: block;
+                      "
+                      class="mobile-font"
+                    >
+                      Kindly use this Otp to verify your identity and change the
+                      password : <b><%= data.otp %> </b>
+                    </td>
+                  </tr>
+                  <!-- </tbody> -->
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <![endif]-->
+              </td>
+            </tr>
+            <!-- Hero Banner [End] -->
+
+            <!-- Social icons [Start] -->
+            <tr>
+              <td align="center" valign="top" style="padding: 0px 0px 5px 0px">
+                <!--[if (gte mso 9)|(IE)]>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="600" align="center">
+                                        <tbody>
+                                        <tr>
+                                        <td align="center" valign="top" width="600">
+                                        <![endif]-->
+                <!-- <table
+                  width="100%"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  style="max-width: 220px"
+                >
+                  <tr
+                    class="social-part"
+                    style="
+                      display: flex;
+                      justify-content: space-around;
+                      align-items: center;
+                      padding: 15px 0px 20px;
+                    "
+                  >
+                    <td
+                      align="left"
+                      valign="top"
+                      style="
+                        font-size: 0px;
+                        line-height: 0px;
+                        margin-right: 45px;
+                      "
+                    >
+                      <a href="https://www.Facebook.com" target="_blank">
+                        <img
+                          src="/assets/facebook.png"
+                          width="100%"
+                          border="0"
+                          style="display: block; width: 22px"
+                          alt="facebook"
+                        />
+                      </a>
+                    </td>
+                    <td
+                      align="left"
+                      valign="top"
+                      style="
+                        font-size: 0px;
+                        line-height: 0px;
+                        margin-right: 45px;
+                      "
+                    >
+                      <a href="https://www.twitter.com" target="_blank">
+                        <img
+                          src="/assets/twitter.png"
+                          width="22px"
+                          border="0"
+                          style="display: block; width: 22px"
+                          alt="twitter"
+                        />
+                      </a>
+                    </td>
+                    <td
+                      align="left"
+                      valign="top"
+                      style="
+                        font-size: 0px;
+                        line-height: 0px;
+                        margin-right: 45px;
+                      "
+                    >
+                      <a href="https://www.Instagram.com" target="_blank">
+                        <img src="/assets/instagram.pngwidth="22px" border="0"
+                        style="display: block; width: 22px" alt="instagram" />
+                      </a>
+                    </td>
+                    <td
+                      align="left"
+                      valign="top"
+                      style="font-size: 0px; line-height: 0px"
+                    >
+                      <a href="https://www.youtube.com" target="_blank">
+                        <img
+                          src="<%= data.websiteUrl %>/assets/youtube.png"
+                          width="22px"
+                          border="0"
+                          style="display: block; width: 22px"
+                          alt="youtube"
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                </table> -->
+                <!--[if (gte mso 9)|(IE)]>
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <![endif]-->
+              </td>
+            </tr>
+            <!-- social icons [End] -->
+
+            <!-- Text Spaced Out [End] -->
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+                            </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            <![endif]-->
+        </td>
+      </tr>
+    </table>
+    <!-- Parent Table [Start] -->
+  </body>
+</html>

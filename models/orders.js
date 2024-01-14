@@ -4,6 +4,7 @@ const ordersSchema = mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     productId: { type: mongoose.Schema.Types.ObjectId, ref: "Products" },
+    merchantId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     quantity: { type: Number, default: 1 },
     dateOfPurchase: { type: Date, default: "" },
     amount: { type: Number, default: 0 },

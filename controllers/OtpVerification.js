@@ -53,7 +53,6 @@ export const sendOtp = async (req, res) => {
     sendEmail(mailData);
     return res.status(200).json("Otp sent successfully");
   } catch (error) {
-    console.log(error);
     return res.status(400).json("Failed to send otp");
   }
 };

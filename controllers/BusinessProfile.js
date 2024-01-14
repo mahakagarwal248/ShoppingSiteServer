@@ -30,7 +30,6 @@ export const addProfile = async (req, res) => {
     await businessProfile.create(newProfile);
     return res.status(200).json("Profile added successfully");
   } catch (error) {
-    console.log(error);
     return res.status(400).json("Couldn't added a new profile");
   }
 };

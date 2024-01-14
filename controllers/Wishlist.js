@@ -10,7 +10,6 @@ export const addToWishlist = async (req, res) => {
   const existingWishlist = await wishlist.findOne({ userId });
   if (existingWishlist) {
     const existingProduct = existingWishlist.products.filter((item) => {
-      console.log(item);
       return item.toString() === productId;
     });
     if (existingProduct && existingProduct?.length > 0) {

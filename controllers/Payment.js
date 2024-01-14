@@ -19,6 +19,7 @@ export const initiatePayment = async (req, res) => {
       {
         path: "products.productId",
         model: "Products",
+        select: "merchantId price _id",
       },
       {
         path: "userId",
@@ -32,7 +33,8 @@ export const initiatePayment = async (req, res) => {
       amount += product.productId.price * product.quantity;
       const createdOrder = await ordersSchema.create({
         userId,
-        productId: product.productId,
+        productId: product.productId._id,
+        merchantId: product?.productId?.merchantId,
         quantity: product?.quantity,
         amount: product.productId.price,
       });

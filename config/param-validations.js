@@ -131,6 +131,11 @@ export default {
       userId: joi.string().required(),
     },
   }),
+  getMerchantOrders: joi.object({
+    query: {
+      merchantId: joi.string().required(),
+    },
+  }),
   sendOtp: joi.object({
     query: {
       email: joi.string().required(),

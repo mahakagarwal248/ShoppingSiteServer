@@ -24,20 +24,16 @@ export const postImage = async (req, res) => {
     },
     userId: _id,
   };
-  user.findByIdAndUpdate(_id, obj, (err, item) => {
-    if (err) {
-      console.log(err);
-    } else {
-      item.save();
-      res.redirect("/");
-    }
-  });
+  const updatedUser = await user.findByIdAndUpdate(_id, obj, { new: true });
+  if (!updatedUser)
+    return res.status(404).json("Failed to update profile picture");
+  return res.status(200).json(updatedUser);
 };
 
 export const getImage = async (req, res) => {
   const { id: _id } = req.params;
   try {
-    const users = await user.findById(_id)
+    const users = await user.findById(_id);
     const pic = await users.profilePicture;
     res.status(200).json(pic);
   } catch (error) {

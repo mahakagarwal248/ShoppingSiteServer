@@ -23,7 +23,9 @@ export const addProducts = async (req, res) => {
     await newProduct.save();
     return res.status(200).json("Added a new product successfully");
   } catch (error) {
-    return res.status(400).json("Couldn't added a new product");
+    return res
+      .status(400)
+      .json(`Couldn't added a new product. Error : ${error?.response?.data}`);
   }
 };
 

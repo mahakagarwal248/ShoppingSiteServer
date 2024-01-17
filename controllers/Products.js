@@ -63,9 +63,21 @@ export const deleteProduct = async (req, res) => {
 };
 
 export const getAllProducts = async (req, res) => {
+  const {
+    query: { page = "1", limit = "8" },
+  } = req;
   try {
-    const productList = await products.find({ isActive: true }).lean();
-    return res.status(200).json(productList);
+    const productList = await products
+      .find({ isActive: true })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+    const productCount = await products.countDocuments({ isActive: true });
+    const responseObj = {
+      productList,
+      productCount,
+    };
+    return res.status(200).json(responseObj);
   } catch (error) {
     return res.status(404).json({ message: error.message });
   }

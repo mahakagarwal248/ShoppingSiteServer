@@ -64,8 +64,8 @@ export default {
     },
   }),
   getProductsByCategory: joi.object({
-    params: {
-      id: joi.string().required(),
+    query: {
+      category: joi.string().required(),
     },
   }),
   getProductById: joi.object({

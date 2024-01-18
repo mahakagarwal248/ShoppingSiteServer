@@ -97,19 +97,69 @@ export const getProductById = async (req, res) => {
 };
 
 export const getProductsByCategory = async (req, res) => {
-  const { id: category } = req.params;
+  const {
+    query: { page = "1", limit = "8", category },
+  } = req;
   try {
     if (category === "all") {
-      const productsList = await products.find({ isActive: true }).lean();
-      return res.status(200).json(productsList);
+      const productsList = await products.aggregate([
+        {
+          $match: {
+            isActive: true,
+          },
+        },
+        {
+          $facet: {
+            items: [
+              { $skip: Number(page) - 1 }, // replace 10 with the number of documents you want to skip
+              { $limit: Number(limit) }, // replace 20 with the number of documents you want to retrieve
+            ],
+            count: [
+              {
+                $group: {
+                  _id: null,
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+          },
+        },
+      ]);
+      const responseObj = {
+        productList: productsList[0]?.items,
+        productCount: productsList[0]?.count[0]?.count,
+      };
+      return res.status(200).json(responseObj);
     } else {
-      const productsList = await products
-        .find({
-          category: category,
-          isActive: true,
-        })
-        .lean();
-      return res.status(200).json(productsList);
+      const productsList = await products.aggregate([
+        {
+          $match: {
+            category: category,
+            isActive: true,
+          },
+        },
+        {
+          $facet: {
+            items: [
+              { $skip: Number(page) - 1 }, // replace 10 with the number of documents you want to skip
+              { $limit: Number(limit) }, // replace 20 with the number of documents you want to retrieve
+            ],
+            count: [
+              {
+                $group: {
+                  _id: null,
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+          },
+        },
+      ]);
+      const responseObj = {
+        productList: productsList[0]?.items,
+        productCount: productsList[0]?.count[0]?.count,
+      };
+      return res.status(200).json(responseObj);
     }
   } catch (error) {
     return res.status(404).json(error.message);

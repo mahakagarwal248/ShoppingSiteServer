@@ -39,10 +39,11 @@ router
   .route("/getProductById")
   .get(Validation(paramValidations.getProductById), getProductById);
 
-router.get(
-  "/getProductByCategory/:id",
-  Validation(paramValidations.getProductsByCategory),
-  getProductsByCategory
-);
+router
+  .route("/getProductByCategory")
+  .get(
+    Validation(paramValidations.getProductsByCategory),
+    getProductsByCategory
+  );
 
 export default router;
